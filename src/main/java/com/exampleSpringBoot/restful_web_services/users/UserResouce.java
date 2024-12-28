@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.exampleSpringBoot.restful_web_services.UserDAOservice;
+import com.exampleSpringBoot.restful_web_services.exception.UserNotFoundException;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class UserResouce {
 
 	private UserDAOservice service;
+	private Users user;
 	
 	
 	public UserResouce(UserDAOservice service) {
@@ -39,14 +44,13 @@ public class UserResouce {
 		Users user = service.findOne(id);
 		if(user==null)
 			throw new UserNotFoundException("id:"+id);
-		
 		return user;
 		
 	}
 	
 	//POST /user/{ID}
 	@PostMapping("/users")
-	public ResponseEntity<Users> storeUser(@RequestBody Users user) {
+	public ResponseEntity<Users> storeUser(@Valid @RequestBody Users user) {
 		// Save the user
 		Users savedUser  = service.save(user);
 		//Get user ID url
@@ -56,8 +60,14 @@ public class UserResouce {
 						.toUri();
 		//Return the response
 		return ResponseEntity.created(location ).build();
-		
 	}
+	
+	//DELETE  /user/{id}
+	@DeleteMapping("/users/{id}")
+	public void  deleteUser(@PathVariable int id) {
+		service.deleteUser(id);
+	}
+	
 	
 	
 }

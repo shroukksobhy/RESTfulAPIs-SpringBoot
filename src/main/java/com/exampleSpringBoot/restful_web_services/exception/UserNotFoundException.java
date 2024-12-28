@@ -1,4 +1,4 @@
-package com.exampleSpringBoot.restful_web_services.users;
+package com.exampleSpringBoot.restful_web_services.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
