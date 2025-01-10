@@ -2,6 +2,10 @@ package com.exampleSpringBoot.restful_web_services.users;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -28,24 +32,30 @@ public class Users {
 	public void setID(int iD) {
 		ID = iD;
 	}
+	
+	@JsonProperty("user_name")
 	public String getName() {
 		return Name;
 	}
 	public void setName(String name) {
 		Name = name;
 	}
+	
+	@JsonProperty("birth_date")
 	public LocalDate getBirthDate() {
 		return BirthDate;
 	}
 	public void setBirthDate(LocalDate birthDate) {
 		BirthDate = birthDate;
 	}
+	
 	@Override
-	public 
-	String toString() {
-		return "Users [ID=" + ID + ", Name=" + Name + ", BirthDate=" + BirthDate + "]";
+	public String toString() {
+	    return "Users{" +
+	            "user_name='" + Name + '\'' + 
+	            ", birth_date=" + BirthDate + 
+	            ", id=" + ID + 
+	            '}';
 	}
-	
-	
 
 }
